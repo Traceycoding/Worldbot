@@ -1,26 +1,31 @@
-const { BedrockPortal } = require('bedrock-portal');
+const bedrock = require('bedrock-protocol');
 const express = require('express');
 
+// Keep Render online
 const app = express();
-app.get('/', (req, res) => res.send('Bot is active'));
+app.get('/', (req, res) => res.send('Bot is searching for NehemiahCraft...'));
 app.listen(process.env.PORT || 3000);
 
-const main = async () => {
-  const portal = new BedrockPortal({
-    username: 'IWnetwork@outlook.com',
-    auth: 'microsoft'
-  });
+console.log('Starting bot for NehemiahCraft...');
 
-  console.log('Searching for NehemiahCraft...');
-  
-  try {
-    await portal.start();
-    // THE FIX: The method name is joinSession
-    await portal.joinSession('NehemiahCraft'); 
-    console.log('Successfully Joined NehemiahCraft!');
-  } catch (err) {
-    console.error('Join Error:', err.message);
-  }
-};
+const client = bedrock.createClient({
+  // Use the host's Gamertag directly here
+  host: 'NehemiahCraft', 
+  username: 'IWnetwork@outlook.com',
+  offline: false,
+  auth: 'microsoft',
+  // This tells the bot to find the friend's session on Xbox Live
+  follow: true 
+});
 
-main();
+client.on('join', () => {
+  console.log('SUCCESS: Bot has entered NehemiahCraft\'s world!');
+});
+
+client.on('error', (err) => {
+  console.error('Join Error:', err.message);
+});
+
+client.on('close', () => {
+  console.log('Connection closed. If this happened immediately, check if NehemiahCraft is online.');
+});
