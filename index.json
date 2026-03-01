@@ -1,12 +1,10 @@
 const bedrock = require('bedrock-protocol');
 const express = require('express');
 
-// Keep-alive server for Render
 const app = express();
-app.get('/', (req, res) => res.send('Bot is active'));
+app.get('/', (req, res) => res.send('Bot online'));
 app.listen(process.env.PORT || 3000);
 
-// Minecraft Bot
 const client = bedrock.createClient({
   host: 'NehemiahCraft',
   username: 'IWnetwork@outlook.com',
@@ -15,10 +13,5 @@ const client = bedrock.createClient({
   profilesFolder: './auth-cache'
 });
 
-client.on('join', () => {
-  console.log('Joined world successfully!');
-});
-
-client.on('error', (err) => {
-  console.error('Bot Error:', err);
-});
+client.on('join', () => console.log('Joined!'));
+client.on('error', (err) => console.error(err));
