@@ -1,7 +1,7 @@
 const { BedrockPortal } = require('bedrock-portal');
 const express = require('express');
 
-// Keep Render happy
+// Keep Render online
 const app = express();
 app.get('/', (req, res) => res.send('Bot is active'));
 app.listen(process.env.PORT || 3000);
@@ -12,15 +12,15 @@ const main = async () => {
     auth: 'microsoft'
   });
 
-  console.log('Starting bot and looking for NehemiahCraft...');
+  console.log('Searching for NehemiahCraft...');
   
   try {
     await portal.start();
-    // This tells the bot to join NehemiahCraft's active session
+    // Joins the session of your friend NehemiahCraft
     await portal.joinWorld('NehemiahCraft'); 
-    console.log('Joined world!');
+    console.log('Bot has entered the world!');
   } catch (err) {
-    console.error('Failed to join:', err);
+    console.error('Join Error:', err);
   }
 };
 
