@@ -1,22 +1,27 @@
-const bedrock = require('bedrock-protocol');
+const { BedrockPortal } = require('bedrock-portal');
 const express = require('express');
 
-// Keep Render alive
+// Keep Render happy
 const app = express();
-app.get('/', (req, res) => res.send('Bot status: Active'));
+app.get('/', (req, res) => res.send('Bot is active'));
 app.listen(process.env.PORT || 3000);
 
-// Bot Config
-const client = bedrock.createClient({
-  username: 'IWnetwork@outlook.com',
-  offline: false,
-  auth: 'microsoft',
-  // Removed profilesFolder since you can't make folders
-  version: '26.2', // Set this to the version NehemiahCraft is using
-  realms: {
-    pickRealm: (realms) => realms.find(r => r.owner === 'NehemiahCraft')
-  }
-});
+const main = async () => {
+  const portal = new BedrockPortal({
+    username: 'IWnetwork@outlook.com',
+    auth: 'microsoft'
+  });
 
-client.on('join', () => console.log('Successfully joined the world!'));
-client.on('error', (err) => console.error('Bot Error:', err));
+  console.log('Starting bot and looking for NehemiahCraft...');
+  
+  try {
+    await portal.start();
+    // This tells the bot to join NehemiahCraft's active session
+    await portal.joinWorld('NehemiahCraft'); 
+    console.log('Joined world!');
+  } catch (err) {
+    console.error('Failed to join:', err);
+  }
+};
+
+main();
