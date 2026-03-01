@@ -3,7 +3,7 @@ const express = require('express');
 
 // Keep Render online
 const app = express();
-app.get('/', (req, res) => res.send('Bot is active'));
+app.get('/', (req, res) => res.send('Bot is searching for world...'));
 app.listen(process.env.PORT || 3000);
 
 const main = async () => {
@@ -16,9 +16,9 @@ const main = async () => {
   
   try {
     await portal.start();
-    // Joins the session of your friend NehemiahCraft
-    await portal.joinWorld('NehemiahCraft'); 
-    console.log('Bot has entered the world!');
+    // THE FIX: Use .join() instead of .joinWorld()
+    await portal.join('NehemiahCraft'); 
+    console.log('Successfully Joined NehemiahCraft!');
   } catch (err) {
     console.error('Join Error:', err);
   }
