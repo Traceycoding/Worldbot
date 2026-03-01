@@ -1,9 +1,9 @@
 {
-  "name": "mc-bedrock-bot",
+  "name": "mc-world-bot",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node ./index.js"
   },
   "dependencies": {
     "bedrock-protocol": "^3.49.0",
