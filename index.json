@@ -1,14 +1,24 @@
 const bedrock = require('bedrock-protocol');
+const express = require('express');
 
+// 1. Keep-Alive Server for Render
+const app = express();
+app.get('/', (req, res) => res.send('Bot is online!'));
+app.listen(process.env.PORT || 3000);
+
+// 2. Minecraft Bot Configuration
 const client = bedrock.createClient({
-  // Use the host's XUID or Gamertag to find the session
-  host: 'NehemiahCraft', 
-  username: 'IWnetwork@outlook.com', 
+  host: 'NehemiahCraft',         // The host's Gamertag
+  username: 'IWnetwork@outlook.com',
   offline: false,
   auth: 'microsoft',
-  // Essential for Render: tells the bot where to save login tokens
-  profilesPath: './auth-cache' 
+  profilesFolder: './auth-cache' // Path to your uploaded login folder
 });
 
-client.on('join', () => console.log('Bot joined @NehemiahCraft successfully!'));
-client.on('error', (err) => console.error('Error:', err));
+client.on('join', () => {
+  console.log('Bot has joined NehemiahCraft\'s world!');
+});
+
+client.on('error', (err) => {
+  console.error('Connection Error:', err);
+});
