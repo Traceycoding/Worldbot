@@ -1,9 +1,8 @@
 const { BedrockPortal } = require('bedrock-portal');
 const express = require('express');
 
-// Keep Render online
 const app = express();
-app.get('/', (req, res) => res.send('Bot is searching for world...'));
+app.get('/', (req, res) => res.send('Bot is active'));
 app.listen(process.env.PORT || 3000);
 
 const main = async () => {
@@ -16,11 +15,11 @@ const main = async () => {
   
   try {
     await portal.start();
-    // THE FIX: Use .join() instead of .joinWorld()
-    await portal.join('NehemiahCraft'); 
+    // THE FIX: The method name is joinSession
+    await portal.joinSession('NehemiahCraft'); 
     console.log('Successfully Joined NehemiahCraft!');
   } catch (err) {
-    console.error('Join Error:', err);
+    console.error('Join Error:', err.message);
   }
 };
 
