@@ -1,0 +1,14 @@
+const bedrock = require('bedrock-protocol');
+
+const client = bedrock.createClient({
+  // Use the host's XUID or Gamertag to find the session
+  host: 'NehemiahCraft', 
+  username: 'IWnetwork@outlook.com', 
+  offline: false,
+  auth: 'microsoft',
+  // Essential for Render: tells the bot where to save login tokens
+  profilesPath: './auth-cache' 
+});
+
+client.on('join', () => console.log('Bot joined @NehemiahCraft successfully!'));
+client.on('error', (err) => console.error('Error:', err));
