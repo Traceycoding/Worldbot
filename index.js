@@ -1,30 +1,22 @@
 const bedrock = require('bedrock-protocol');
 const express = require('express');
 
-// 1. Web Server to keep Render happy
+// Keep Render alive
 const app = express();
-const PORT = process.env.PORT || 3000;
-app.get('/', (req, res) => res.send('Bot is active and running!'));
-app.listen(PORT, () => console.log(`Web server listening on port ${PORT}`));
+app.get('/', (req, res) => res.send('Bot status: Active'));
+app.listen(process.env.PORT || 3000);
 
-// 2. Minecraft Bot Configuration
+// Bot Config
 const client = bedrock.createClient({
-  host: 'NehemiahCraft',         // The host's Gamertag
   username: 'IWnetwork@outlook.com',
-  offline: false,                // Must be false for Friend Worlds
+  offline: false,
   auth: 'microsoft',
-  profilesFolder: './auth-cache' // Folder containing your login session
+  // Removed profilesFolder since you can't make folders
+  version: '26.2', // Set this to the version NehemiahCraft is using
+  realms: {
+    pickRealm: (realms) => realms.find(r => r.owner === 'NehemiahCraft')
+  }
 });
 
-client.on('join', () => {
-  console.log('Successfully joined NehemiahCraft\'s world!');
-});
-
-client.on('error', (err) => {
-  console.error('Connection Error:', err);
-});
-
-// Auto-reconnect if kicked
-client.on('close', () => {
-  console.log('Disconnected. Attempting to reconnect...');
-});
+client.on('join', () => console.log('Successfully joined the world!'));
+client.on('error', (err) => console.error('Bot Error:', err));
