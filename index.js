@@ -1,30 +1,27 @@
+
 const bedrock = require('bedrock-protocol');
 const express = require('express');
 
-// Keep Render online
 const app = express();
-app.get('/', (req, res) => res.send('Bot is searching for NehemiahCraft...'));
+app.get('/', (req, res) => res.send('Bot searching for 26.2 world...'));
 app.listen(process.env.PORT || 3000);
 
-console.log('Bot starting... logging in as IWnetwork@outlook.com');
+console.log('Bot starting... version set to 1.26.201');
 
 const client = bedrock.createClient({
   username: 'IWnetwork@outlook.com',
   offline: false,
   auth: 'microsoft',
-  // This logic searches your friends list for your active world
-  realms: {
-    pickRealm: (realms) => {
-      console.log('Checking active sessions...');
-      return realms.find(r => r.owner === 'NehemiahCraft');
-    }
-  }
+  version: '1.26.201', // Version code for Bedrock 26.2
+  follow: true, 
+  host: 'NehemiahCraft' 
 });
 
 client.on('join', () => {
-  console.log('SUCCESS: Bot has entered NehemiahCraft\'s world!');
+  console.log('SUCCESS: Bot has entered your 26.2 world!');
 });
 
 client.on('error', (err) => {
-  console.log('Status:', err.message);
+  // If you see "Unsupported Version," remove the version line above
+  console.log('Status Update:', err.message);
 });
